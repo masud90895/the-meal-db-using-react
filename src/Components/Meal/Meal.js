@@ -17,8 +17,6 @@ const Meal = ({meal,setName,name}) => {
         localStorage.setItem('Meals',JSON.stringify(newMeal))
         setName(newMeal)
       }
-      
-
     }
     return (
         <div data-aos="zoom-out-down">
