@@ -1,10 +1,12 @@
 import React from 'react';
+import Swal from 'sweetalert2'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope,faCartShopping } from '@fortawesome/free-solid-svg-icons'
 
 const Meal = ({meal,setName,name}) => {
     const {strInstructions,strMealThumb,strMeal,strCategory,idMeal} =meal
-    const handleAddToCart=()=>{
+    // console.log(name);
+    const handleAddToCart=(id)=>{
       const info={
         idMeal,
         strInstructions,
@@ -13,9 +15,32 @@ const Meal = ({meal,setName,name}) => {
         strCategory
       }
       if(name){
-        const newMeal=[...name,info] 
-        localStorage.setItem('Meals',JSON.stringify(newMeal))
-        setName(newMeal)
+        if(name.length < 7){
+          const chackDualId=name.find(chackId=> chackId.idMeal === id )
+
+            if(chackDualId){
+                Swal.fire(
+                  'Bullshit?',
+                  'Why You Adding Same Item Again',
+                  'question'
+                  )
+            return
+          }else{
+            const newMeal=[...name,info] 
+            localStorage.setItem('Meals',JSON.stringify(newMeal))
+           setName(newMeal)
+            return;
+          }
+        }
+        else{
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: "You can't added more than seventh item",
+          })
+          return
+        }
+        
       }
     }
     return (
@@ -28,7 +53,7 @@ const Meal = ({meal,setName,name}) => {
       <div className="badge badge-secondary">{strCategory}</div>
     </h2>
     <p>{strInstructions.length > 60 ? strInstructions.slice(0,60)+"..." : strInstructions}</p>
-    <button onClick={handleAddToCart}  className="btn btn-outline btn-error">Add To Card <FontAwesomeIcon className='ml-2' icon={faCartShopping} /></button>
+    <button onClick={()=>handleAddToCart(meal.idMeal)}  className="btn btn-outline btn-error">Add To Card <FontAwesomeIcon className='ml-2' icon={faCartShopping} /></button>
   </div>
 </div>
         </div>

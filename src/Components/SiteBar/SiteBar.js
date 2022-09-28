@@ -29,7 +29,7 @@ const SiteBar = ({name,setName}) => {
           <a><FontAwesomeIcon className='text-red-700' icon={faArrowRight} />   {mealName.strMeal} </a> 
         <button onClick={()=>deleteBtn(mealName.idMeal)}> <FontAwesomeIcon className='text-red-700' icon={faTrashArrowUp} /></button>
          </li>) */
-         name.map(mealName=> <SiteCard  mealName={mealName} name={name} setName={setName}/>)
+         name.map(mealName=> <SiteCard key={mealName.idMeal}  mealName={mealName} name={name} setName={setName}/>)
       }
     
       
